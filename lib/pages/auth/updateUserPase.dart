@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:appstore/pages/home/home_page.dart';
 import 'package:appstore/pages/shared/widgets/Snackbar.dart';
 import 'package:appstore/pages/shared/widgets/const.dart';
 import 'package:appstore/pages/shared/widgets/custombuttonauth.dart';
@@ -44,11 +45,12 @@ class _UpdateUserPage extends State<UpdateUser> {
       User.userUsername(data['username']);
       User.password = password.text;
       ShowsnackBar(context, "Account successfully Updated");
-      Navigator.pop(context);
+
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => HomePage()));
     } else {
       ShowsnackBar(
           context, " update failed. Status code: ${response.statusCode}");
-      print('Response: ${response.body}');
     }
 
     setState(() {
@@ -58,15 +60,11 @@ class _UpdateUserPage extends State<UpdateUser> {
 
   getuserDate() async {
     try {
-      final response = await http.get(Uri.parse('https://dummyjson.com/users/1'
-          // 'https://dummyjson.com/users/${User.getUserId().toString()}'
-
-          ));
+      final response = await http.get(Uri.parse('https://dummyjson.com/users/1'));
       final data = jsonDecode(response.body);
-      
-      username.text = data['username'];
-      email.text = data['email'];
-      password.text = data['password'];
+      username.text = User.getUserUsername();
+      email.text = User.getUserEmail();
+      password.text = User.getUserPassword();
     } catch (e) {
       print(e);
     }

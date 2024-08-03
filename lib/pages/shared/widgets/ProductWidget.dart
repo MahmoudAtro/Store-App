@@ -1,11 +1,15 @@
 import 'dart:convert';
 
+import 'package:appstore/pages/auth/login.dart';
 import 'package:appstore/pages/products/ProductDetailsPage.dart';
 import 'package:appstore/pages/shared/models/Provider.dart';
 import 'package:appstore/pages/shared/models/products_response.dart';
 import 'package:appstore/pages/shared/widgets/Snackbar.dart';
+import 'package:appstore/services/Sherdperf.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 class ProductWidget extends StatefulWidget {
@@ -34,10 +38,10 @@ class _ProductWidgetState extends State<ProductWidget> {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       
-      ShowsnackBar(context, "Cart in successfully");
+      // ShowsnackBar(context, "Cart in successfully");
     } else {
-      ShowsnackBar(
-          context, 'Created failed. Status code: ${response.statusCode}');
+      // ShowsnackBar(
+      //     context , 'Created failed. Status code: ${response.statusCode}');
       print('Response: ${response.body}');
     }
   }
@@ -47,7 +51,7 @@ class _ProductWidgetState extends State<ProductWidget> {
     var provider = Provider.of<Model>(context);
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(
+        Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => ProductDetailsPage(product: widget.product),
           ),
@@ -85,8 +89,24 @@ class _ProductWidgetState extends State<ProductWidget> {
                       ),
                       IconButton(
                         onPressed: () async {
-                          provider.addToListMyBasket(widget.product);
-                          await addToCart();
+                          if (User.getIsLogin()) {
+                            provider.addToListMyBasket(widget.product);
+                            await addToCart();
+                          } else {
+                            AwesomeDialog(
+                                context: context,
+                                dialogType: DialogType.warning,
+                                btnOkText: "Login",
+                                btnOkOnPress: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Login()));
+                                },
+                                btnCancelOnPress: () {},
+                                title: 'Please login')
+                              ..show();
+                          }
                         },
                         icon: const Icon(
                           Icons.add_shopping_cart,

@@ -4,12 +4,8 @@ import 'package:appstore/services/api.dart';
 
 import '../pages/shared/models/products_response.dart';
 
-
 class ProductService {
-  ///
-  /// This method is used to get most selling 10 product
-  /// [return] list of product objects
-  ///
+
   static Future<List<Product>?> getMostSellingProducts() async {
     List<Product>? products;
     final res = await Api.get('products', {
@@ -23,15 +19,21 @@ class ProductService {
     }
     return products;
   }
-
-  ///
-  /// This method is used to get all product
-  /// [return] list of product objects
-  /// [todo] add pagination to this method
-  ///
   static Future<List<Product>?> getProducts() async {
     List<Product>? products;
     final res = await Api.get('products');
+    if (res.statusCode == 200) {
+      final productResponse = ProductsResponse.fromJson(jsonDecode(res.body));
+      if (productResponse.products.isNotEmpty) {
+        products = productResponse.products;
+      }
+    }
+    return products;
+  }
+
+  static Future<List<Product>?> getProductTrind() async {
+    List<Product>? products;
+    final res = await Api.get('limit=10select=title,price,thumbnail,rating');
     if (res.statusCode == 200) {
       final productResponse = ProductsResponse.fromJson(jsonDecode(res.body));
       if (productResponse.products.isNotEmpty) {

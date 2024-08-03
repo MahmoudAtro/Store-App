@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:appstore/pages/shared/layout/PageLayout.dart';
 import 'package:appstore/pages/shared/models/Provider.dart';
 import 'package:appstore/pages/shared/models/products_response.dart';
 import 'package:appstore/pages/shared/widgets/ProductWidget.dart';
 import 'package:appstore/services/product_service.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:infinite_carousel/infinite_carousel.dart';
 import 'package:provider/provider.dart';
 
@@ -43,7 +40,9 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
- 
+  getAllProducts() {
+    return products;
+  }
 
   @override
   void initState() {
@@ -56,13 +55,14 @@ class _HomePageState extends State<HomePage> {
     var provider = Provider.of<Model>(context);
     return PageLayout(
       title: 'Home Page',
+      getAllProducts: getAllProducts,
       updateProductsByCategory: updateProductsByCategory,
       body: Column(
         children: [
-          // Expanded(
-          //   flex: 3,
-          //   child: _slider(),
-          // ),
+          Expanded(
+            flex: 3,
+            child: _slider(),
+          ),
 
           // Most Selling Products
           Expanded(
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
             child: isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : Container(
-                    color: Colors.grey[300],
+                    color: Color(0xFFFFFFFF),
                     alignment: Alignment.center,
                     // 1) null -> error - 2) [] -> no data - 3) [...] -> showing
                     child: products == null

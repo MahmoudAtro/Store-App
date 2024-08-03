@@ -53,14 +53,9 @@ class _RegistreState extends State<Registre> {
           context, " Login failed. Status code: ${response.statusCode}");
       print('Response: ${response.body}');
     }
-
     setState(() {
       isloding = false;
     });
-
-    final res = await get(Uri.parse('https://dummyjson.com/users'));
-    var data = jsonDecode(res.body);
-    print(data);
   }
 
   @override

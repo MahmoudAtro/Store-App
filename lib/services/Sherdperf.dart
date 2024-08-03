@@ -1,39 +1,41 @@
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class User extends ChangeNotifier {
+class User {
   static int id = 1;
-  static String username = "User";
-  static String email = "User@email.com";
-  static String password = 'emilyspass';
+  static late String username;
+  static late String email;
+  static late String password;
   static bool? islogin;
-  static late final SharedPreferences prefs;
-  static setIsLogin(bool islogin) async {
+  static late SharedPreferences prefs;
+  static Future<void> init() async {
     prefs = await SharedPreferences.getInstance();
+  }
 
+  static setIsLogin(bool islogin) async {
+    await init();
     await prefs.setBool('islogin', islogin);
   }
 
   static userPassword(String password) async {
-    prefs = await SharedPreferences.getInstance();
+    init();
 
-    await prefs.setString('password', email);
+    await prefs.setString('password', password);
   }
 
   static userEmail(String email) async {
-    prefs = await SharedPreferences.getInstance();
+    await init();
 
     await prefs.setString('email', email);
   }
 
   static userUsername(String username) async {
-    prefs = await SharedPreferences.getInstance();
+   await init();
 
     await prefs.setString('username', username);
   }
 
   static userId(int id) async {
-    prefs = await SharedPreferences.getInstance();
+    init();
 
     await prefs.setInt('id', id);
   }
@@ -43,15 +45,15 @@ class User extends ChangeNotifier {
   }
 
   static getUserEmail() {
-    return prefs.get('email');
+    return prefs.get('email') ?? "User@email.com".toString();
   }
 
   static getUserUsername() {
-    return prefs.get('username');
+    return prefs.get('username') ?? "User";
   }
 
   static getUserPassword() {
-    return prefs.get('password');
+    return prefs.get('password') ?? "emilyspass";
   }
 
   static getIsLogin() {
@@ -59,7 +61,6 @@ class User extends ChangeNotifier {
   }
 
   static userToken(String token) async {
-    prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
   }
 

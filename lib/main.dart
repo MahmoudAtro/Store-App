@@ -1,10 +1,12 @@
 import 'package:appstore/pages/home/home_page.dart';
 import 'package:appstore/pages/shared/models/Provider.dart';
+import 'package:appstore/services/Sherdperf.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
+  User.init();
 }
 
 class MyApp extends StatelessWidget {

@@ -13,7 +13,7 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
+      child: ListView(
         children: [
           UserAccountsDrawerHeader(
               arrowColor: const Color.fromARGB(255, 238, 238, 238),
@@ -24,13 +24,22 @@ class MyDrawer extends StatelessWidget {
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage('assets/me.jpg'),
               ),
-              accountName: Text("${User.username}"),
-              accountEmail: Text("${User.email}")),
+              accountName: Text("${User.getUserUsername()}"),
+              accountEmail: Text("${User.getUserEmail()}")),
           Card(
             child: ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Home Page'),
-              trailing: Icon(Icons.navigate_next),
+              leading: Icon(
+                Icons.home,
+                color: Colors.redAccent,
+              ),
+              title: Text(
+                'Home Page',
+                style: TextStyle(color: Colors.redAccent),
+              ),
+              trailing: Icon(
+                Icons.navigate_next,
+                color: Colors.redAccent,
+              ),
               onTap: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
@@ -42,9 +51,16 @@ class MyDrawer extends StatelessWidget {
           ),
           Card(
             child: ListTile(
-              leading: Icon(Icons.monetization_on),
-              title: Text('Products Page'),
-              trailing: Icon(Icons.navigate_next),
+              leading: Icon(
+                Icons.shopping_cart,
+                color: Colors.redAccent,
+              ),
+              title: Text('Products Page',
+                  style: TextStyle(color: Colors.redAccent)),
+              trailing: Icon(
+                Icons.navigate_next,
+                color: Colors.redAccent,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -56,9 +72,16 @@ class MyDrawer extends StatelessWidget {
           ),
           Card(
             child: ListTile(
-              leading: Icon(Icons.add_shopping_cart),
-              title: Text('My Basket'),
-              trailing: Icon(Icons.navigate_next),
+              leading: Icon(
+                Icons.add_shopping_cart,
+                color: Colors.redAccent,
+              ),
+              title:
+                  Text('My Basket', style: TextStyle(color: Colors.redAccent)),
+              trailing: Icon(
+                Icons.navigate_next,
+                color: Colors.redAccent,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -68,76 +91,103 @@ class MyDrawer extends StatelessWidget {
               },
             ),
           ),
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.add_shopping_cart),
-              title: Text('Order me'),
-              trailing: Icon(Icons.navigate_next),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => OrderPage(),
-                  ),
-                );
-              },
-            ),
-          ),
-          Card(
-            child: ListTile(
-                leading: Icon(Icons.login),
-                title: Text('Login'),
-                trailing: Icon(Icons.navigate_next),
-                onTap: () {
-                  // if (context.read<Model>().getchecklogin()) {
-                  //   AwesomeDialog(
-                  //     context: context,
-                  //     dialogType: DialogType.error,
-                  //     animType: AnimType.rightSlide,
-                  //     title: 'You have already logged in',
-                  //     desc: '',
-                  //     btnCancelOnPress: () {},
-                  //     btnOkOnPress: () {},
-                  //   ).show();
-                  // } else {}
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => Login(),
-                    ),
-                  );
-                }),
-          ),
-          //     if(User.getIsLogin())
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.update),
-              title: Text('Update User'),
-              trailing: Icon(Icons.navigate_next),
-              onTap: () async {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => UpdateUser(),
-                  ),
-                );
-              },
-            ),
-          ),
-
-          // if (User.getIsLogin())
-            Card(
+          Visibility(
+            visible: User.getIsLogin(),
+            child: Card(
+              elevation: 1,
               child: ListTile(
-                leading: Icon(Icons.output),
-                title: Text('Logout'),
-                trailing: Icon(Icons.navigate_next),
-                onTap: () async {
-                  // User.setIsLogin(false);
+                shape: CircleBorder(eccentricity: 0),
+                leading: Icon(
+                  Icons.shopping_basket,
+                  color: Colors.redAccent,
+                ),
+                title:
+                    Text('Order me', style: TextStyle(color: Colors.redAccent)),
+                trailing: Icon(
+                  Icons.navigate_next,
+                  color: Colors.redAccent,
+                ),
+                onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) => Login(),
+                      builder: (_) => OrderPage(),
                     ),
                   );
                 },
               ),
-            )
+            ),
+          ),
+          Visibility(
+            child: Card(
+              child: ListTile(
+                  leading: Icon(
+                    Icons.login,
+                    color: Colors.redAccent,
+                  ),
+                  title:
+                      Text('Login', style: TextStyle(color: Colors.redAccent)),
+                  trailing: Icon(
+                    Icons.navigate_next,
+                    color: Colors.redAccent,
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => Login(),
+                      ),
+                    );
+                  }),
+            ),
+          ),
+          Visibility(
+            visible: User.getIsLogin(),
+            child: Card(
+              child: ListTile(
+                leading: Icon(
+                  Icons.update,
+                  color: Colors.redAccent,
+                ),
+                title: Text('Update User',
+                    style: TextStyle(color: Colors.redAccent)),
+                trailing: Icon(
+                  Icons.navigate_next,
+                  color: Colors.redAccent,
+                ),
+                onTap: () async {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => UpdateUser(),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+          Visibility(
+            visible: User.getIsLogin(),
+            child: Card(
+              child: ListTile(
+                leading: Icon(
+                  Icons.output,
+                  color: Colors.redAccent,
+                ),
+                title:
+                    Text('Logout', style: TextStyle(color: Colors.redAccent)),
+                trailing: Icon(
+                  Icons.navigate_next,
+                  color: Colors.redAccent,
+                ),
+                onTap: () async {
+                  User.setIsLogin(false);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => HomePage(),
+                    ),
+                  );
+                },
+              ),
+            ),
+          )
         ],
       ),
     );

@@ -1,8 +1,6 @@
 import 'package:http/http.dart' as http;
 
 class Api {
-  static  late int id ;
-  static const Url = 'https://dummyjson.com/';
   static const baseUrl = 'dummyjson.com';
 
   static Future<http.Response> get(String path,

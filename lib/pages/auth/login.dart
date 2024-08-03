@@ -19,7 +19,6 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _key = GlobalKey<FormState>();
-  // TextEditingController username = TextEditingController();
   TextEditingController _username = TextEditingController();
   TextEditingController _password = TextEditingController();
   bool isVisble = true;
@@ -39,17 +38,17 @@ class _LoginState extends State<Login> {
       }),
     );
     if (response.statusCode == 200) {
-      print('Login successful');
-      print(response.body);
-      final data = json.decode(response.body);
-      if (_username.text == User.username && _password.text == User.password) {
-        User.setIsLogin(true);
+    
+      
+      if (_username.text == User.getUserUsername() &&
+          _password.text == User.getUserPassword()) {
+        setState(() {
+          User.setIsLogin(true);
+        });
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
     } else {
-      print('Login failed with status code: ${response.body}');
-
       ShowsnackBar(
           context, 'Login failed. Status code: ${response.statusCode}');
     }
@@ -81,15 +80,6 @@ class _LoginState extends State<Login> {
               const Text("Login To Continue Using The App",
                   style: TextStyle(color: Colors.grey)),
               Container(height: 20),
-              // const Text(
-              //   "username",
-              //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              // ),
-              // Container(height: 10),
-              // TextFormField(
-              //   keyboardType: TextInputType.text,
-              //   decoration: decoration.copyWith(hintText: " Enter user name :"),
-              // ),
               const Text(
                 "Username",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -149,7 +139,6 @@ class _LoginState extends State<Login> {
                   title: "login",
                   onPressed: () async {
                     await login();
-                    // await loginUser(_username.text, _password.text);
                     // if (_key.currentState!.validate()) {
 
                     // }

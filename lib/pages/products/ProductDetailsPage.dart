@@ -1,4 +1,4 @@
-import 'package:appstore/pages/products/ProductsPage.dart';
+import 'package:appstore/pages/home/home_page.dart';
 import 'package:appstore/pages/shared/layout/PageLayout.dart';
 import 'package:appstore/pages/shared/models/Provider.dart';
 import 'package:appstore/pages/shared/models/products_response.dart';
@@ -20,11 +20,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     var response = await get(
         Uri.parse('https://dummyjson.com/products/${widget.product.id}'));
     if (response.statusCode == 200) {
-      // productdetails= Product.fromJson(response.body);
+      // productdetails= Product.fromJson(response.body as Map<String, dynamic>);
     }
   }
-
-   
 
   @override
   void initState() {
@@ -78,14 +76,19 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
             // Add To Cart Button
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Color(0xFFE67E22)),
+              ),
               onPressed: () {
                 provider.addToListMyBasket(
                   widget.product,
                 );
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => ProductsPage()));
+                    MaterialPageRoute(builder: (context) => HomePage()));
               },
-              child: Text('Add To Cart'),
+              child: Text('Add To Cart',
+                  style: TextStyle(color: Color(0xFFFFFFFF))),
             )
           ],
         ),
