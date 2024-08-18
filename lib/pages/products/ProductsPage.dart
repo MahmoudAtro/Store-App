@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:appstore/pages/shared/layout/PageLayout.dart';
 import 'package:appstore/pages/shared/models/products_response.dart';
 import 'package:appstore/pages/shared/widgets/ProductWidget.dart';
 import 'package:appstore/services/product_service.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
 class ProductsPage extends StatefulWidget {
   List<Product>? Productds = [];

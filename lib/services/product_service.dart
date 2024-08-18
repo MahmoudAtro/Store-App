@@ -31,15 +31,15 @@ class ProductService {
     return products;
   }
 
-  static Future<List<Product>?> getProductTrind() async {
-    List<Product>? products;
-    final res = await Api.get('limit=10select=title,price,thumbnail,rating');
-    if (res.statusCode == 200) {
-      final productResponse = ProductsResponse.fromJson(jsonDecode(res.body));
-      if (productResponse.products.isNotEmpty) {
-        products = productResponse.products;
-      }
-    }
-    return products;
-  }
+  // static Future<List<Product>?> getProductTrind() async {
+  //   List<Product>? products;
+  //   final res = await Api.get('limit=10select=title,price,thumbnail,rating');
+  //   if (res.statusCode == 200) {
+  //     final productResponse = ProductsResponse.fromJson(jsonDecode(res.body));
+  //     if (productResponse.products.isNotEmpty) {
+  //       products = productResponse.products;
+  //     }
+  //   }
+  //   return products;
+  // }
 }

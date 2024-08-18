@@ -1,11 +1,9 @@
 import 'package:appstore/pages/shared/layout/PageLayout.dart';
-import 'package:appstore/pages/shared/models/Provider.dart';
 import 'package:appstore/pages/shared/models/products_response.dart';
 import 'package:appstore/pages/shared/widgets/ProductWidget.dart';
 import 'package:appstore/services/product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:infinite_carousel/infinite_carousel.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -52,7 +50,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<Model>(context);
     return PageLayout(
       title: 'Home Page',
       getAllProducts: getAllProducts,
